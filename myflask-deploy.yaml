@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-deploy
+  name: flaskapp
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: helloworld
+      app: flaskapp
   template:
     metadata:
       labels:
-        app: helloworld
+        app: flaskapp
     spec:
       containers:
-      - name: k8s-demo
-        image: oriexsol/k8s-demo
+      - name: flaskapp
+        image: oriexsol/flask-app
         ports:
         - name: nodejs-port
           containerPort: 80
         livenessProbe:
           httpGet:
-            path: /
+            path: /isalive
             port: nodejs-port
           initialDelaySeconds: 15
           timeoutSeconds: 30

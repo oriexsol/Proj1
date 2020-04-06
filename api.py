@@ -1,15 +1,15 @@
-from flask import Flask, jsonify, json, request
+from flask import Flask, jsonify, json, request,render_template
 
 pl = [
     {
-        "Name": "Orad Exsol",
+        "Name": "Ori Exsol",
         "Age": "19",
-        "Job": "horse farm"
+        "Job": "amazon"
     },
     {
-        "Name": "moshe Exsol",
-        "Age": "56",
-        "Job": "haifaport"
+        "Name": "Avior Exsol",
+        "Age": "25",
+        "Job": "mafat"
     },
     {
         "Name": "Dalit Exsol",
@@ -20,7 +20,9 @@ pl = [
 
 api = Flask(__name__)
 
-
+@api.route('/', methods=['GET'])
+def root():
+    return render_template("myapp.html")
 
 @api.route('/func', methods=['GET'])
 def get():

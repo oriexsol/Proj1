@@ -2,14 +2,14 @@ from flask import Flask, jsonify, json, request
 
 pl = [
     {
-        "Name": "Ori Exsol",
+        "Name": "Orad Exsol",
         "Age": "19",
-        "Job": "amazon"
+        "Job": "horse farm"
     },
     {
-        "Name": "Avior Exsol",
-        "Age": "25",
-        "Job": "mafat"
+        "Name": "moshe Exsol",
+        "Age": "56",
+        "Job": "haifaport"
     },
     {
         "Name": "Dalit Exsol",

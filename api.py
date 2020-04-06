@@ -24,6 +24,11 @@ api = Flask(__name__)
 def root():
     return render_template("myapp.html")
 
+@api.route('/digital', methods=['GET'])
+def digital():
+    return render_template("digital.html")
+
+
 @api.route('/func', methods=['GET'])
 def get():
     a = jsonify(pl)

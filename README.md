@@ -1,3 +1,2 @@
 # myrepo
-te
 ול

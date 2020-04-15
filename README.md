@@ -1,4 +1,2 @@
 # myrepo
-test
-
-ךצ
+te

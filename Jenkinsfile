@@ -2,6 +2,9 @@ node {
 	stage("Build") {
 		sh 'echo "-----------------------------------------BUILD-----------------------------------------"'
 		checkout scm
+		withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+			sh 'docker login -u $USERNAME -p $PASSWORD '
+		}
 		sh 'docker build -t oriexsol/my_app:build .'
 		sh "docker tag oriexsol/my_app:build oriexsol/my_app:${BUILD_NUMBER}"
 		sh 'docker push oriexsol/my_app:build'
@@ -9,6 +12,9 @@ node {
 	}
 	stage("Test") {
 		sh 'echo "-----------------------------------------Test------------------------------------------"'
+		withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+			sh 'docker login -u $USERNAME -p $PASSWORD '
+		}
 		sh 'docker pull oriexsol/my_app:build'
 		sh 'docker tag oriexsol/my_app:build oriexsol/my_app:test'
 		sh 'docker push oriexsol/my_app:test'
@@ -28,6 +34,9 @@ node {
 	}
 	stage ("Deploy") {
 		sh 'echo "-----------------------------------------Deploy------------------------------------------"'
+		withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+			sh 'docker login -u $USERNAME -p $PASSWORD '
+		}
 		sh 'docker pull oriexsol/my_app:test'
 		sh 'docker tag oriexsol/my_app:test oriexsol/my_app:deploy'
 		sh 'docker push oriexsol/my_app:deploy'

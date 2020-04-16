@@ -1,6 +1,6 @@
 node {
 	stage("Build") {
 		checkout scm
-		sh 'echo bamit ach yakar'
+		sh 'docker build -t oriexsol/my_app:latest .'
 	}
 }

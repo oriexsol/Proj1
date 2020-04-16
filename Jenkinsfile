@@ -24,10 +24,13 @@ node {
 		}
 	}
 	stage ("Deploy") {
+		sh 'echo "-----------------------------------------Deploy------------------------------------------"'
 		try{
 			sh 'docker rm -f my_app_prod'
-		}catch(all){
+		}
+		catch(all){
 			sh 'echo "image: oriexsol/my_app:latest out"'
+			throw
 		}
 		sh 'docker build -t oriexsol/my_app_prod:latest .'
 		sh 'docker rm -f my_app_prod'

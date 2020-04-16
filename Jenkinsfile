@@ -11,6 +11,12 @@ node {
 	}
 	stage("Test") {
 		sh 'echo "-----------------------------------------Test------------------------------------------"'
+		try{
+			sh 'docker rm -f dev_my_app'
+		}
+		catch(all){
+			sh 'echo "No such container: dev_my_app"'
+		}
 		sh 'docker run --name dev_my_app -p 80:80 -dit oriexsol/my_app:latest'
 		sh 'chmod +x isalive.sh'
 		def isalive = sh (script: "./isalive.sh", returnStdout: true)
@@ -25,7 +31,12 @@ node {
 	}
 	stage ("Deploy") {
 		sh 'echo "-----------------------------------------Deploy------------------------------------------"'
-		sh 'docker rm -f my_app_prod'
+		try{
+			sh 'docker rm -f my_app_prod'
+		}
+		catch(all){
+			sh 'echo "No such container: my_app_prod"'
+		}
 		sh 'docker build -t oriexsol/my_app_prod:latest .'
 		sh 'docker run --name my_app_prod -p 80:80 -dit oriexsol/my_app_prod:latest'
 	}

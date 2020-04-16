@@ -17,7 +17,7 @@ node {
 		catch(all){
 			sh 'echo "No such container: dev_my_app"'
 		}
-		sh 'docker run --name dev_my_app -p 80:80 -dit oriexsol/my_app:latest'
+		sh 'docker run --name dev_my_app -p 443:80 -dit oriexsol/my_app:latest'
 		sh 'chmod +x isalive.sh'
 		def isalive = sh (script: "./isalive.sh", returnStdout: true)
 		sh 'docker rm -f dev_my_app'

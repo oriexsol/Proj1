@@ -29,7 +29,7 @@ node {
 			sh 'docker rm -f my_app_prod'
 		}
 		catch(all){
-			sh 'echo "image: oriexsol/my_app:latest out"'
+			sh 'echo "No such container: my_app_prod"'
 		}
 		sh 'docker build -t oriexsol/my_app_prod:latest .'
 		sh 'docker run --name my_app_prod -p 80:80 -dit oriexsol/my_app_prod:latest'

@@ -12,7 +12,7 @@ node {
 	stage("Test") {
 		sh 'echo "-----------------------------------------Test------------------------------------------"'
 		sh 'docker run --name dev_my_app -p 80:80 -dit oriexsol/my_app:latest'
-		sh 'chmod +x test.sh'
+		sh 'chmod +x isalive.sh'
 		def isalive = sh (script: "./isalive.sh", returnStdout: true)
 		sh 'docker rm -f dev_my_app'
 		if ("${isalive}") {

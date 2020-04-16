@@ -25,12 +25,7 @@ node {
 	}
 	stage ("Deploy") {
 		sh 'echo "-----------------------------------------Deploy------------------------------------------"'
-		try{
-			sh 'docker rm -f my_app_prod'
-		}
-		catch(all){
-			sh 'echo "No such container: my_app_prod"'
-		}
+		sh 'docker rm -f my_app_prod'
 		sh 'docker build -t oriexsol/my_app_prod:latest .'
 		sh 'docker run --name my_app_prod -p 80:80 -dit oriexsol/my_app_prod:latest'
 	}

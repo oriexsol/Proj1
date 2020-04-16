@@ -1,5 +1,6 @@
 node {
 	stage("Build") {
-    sh 'echo bamit ach yakar'
-  }
+		checkout scm
+		sh 'echo bamit ach yakar'
+	}
 }

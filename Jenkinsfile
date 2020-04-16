@@ -22,6 +22,15 @@ node {
 			echo "Failed The Testing"
 			currentBuild.result = 'FAILURE'
 		}
-		
+	}
+	stage ("Deploy") {
+		try{
+			sh 'docker rm -f my_app_prod'
+		}catch(all){
+			sh 'echo "image: oriexsol/my_app:latest out"'
+		}
+		sh 'docker build -t oriexsol/my_app_prod:latest .'
+		sh 'docker rm -f my_app_prod'
+		sh 'docker run --name my_app_prod -p 80:80 -dit oriexsol/my_app_prod:latest'
 	}
 }

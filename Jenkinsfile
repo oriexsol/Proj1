@@ -18,8 +18,7 @@ node {
 		sh 'docker pull oriexsol/my_app:build'
 		sh 'docker tag oriexsol/my_app:build oriexsol/my_app:test'
 		sh 'docker push oriexsol/my_app:test'
-		sh 'docker rm -f dev_my_app'
-		sh 'docker run --name dev_my_app -p 443:80 -dit oriexsol/my_appt:test'
+		sh 'docker rm -f dev_my_app; docker run --name dev_my_app -p 443:80 -dit oriexsol/my_appt:test'
 		sh 'chmod +x isalive.sh'
 		def isalive = sh (script: "./isalive.sh", returnStdout: true)
 		sh 'docker rm -f dev_my_app'
@@ -40,7 +39,6 @@ node {
 		sh 'docker pull oriexsol/my_app:test'
 		sh 'docker tag oriexsol/my_app:test oriexsol/my_app:deploy'
 		sh 'docker push oriexsol/my_app:deploy'
-		sh 'docker rm -f my_app_prod'
-		sh 'docker run --name my_app_prod -p 80:80 -dit oriexsol/my_app:deploy'
+		sh 'docker rm -f my_app_prod; docker run --name my_app_prod -p 80:80 -dit oriexsol/my_app:deploy'
 	}
 }

@@ -23,6 +23,7 @@ node {
 		sh 'docker rm -f dev_my_app'
 		if ("${isalive}") {
 			echo "Testing completed successfully!"
+			echo "$isalive"
 		}
 		else {
 			echo "Failed The Testing"

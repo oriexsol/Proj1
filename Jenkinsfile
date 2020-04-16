@@ -2,22 +2,18 @@ node {
 	stage("Build") {
 		sh 'echo "-----------------------------------------BUILD-----------------------------------------"'
 		checkout scm
-		try{
-			sh 'docker rmi oriexsol/my_app:latest'
-		}catch(all){
-			sh 'echo "image: oriexsol/my_app:latest out"'
-		}
-		sh 'docker build -t oriexsol/my_app:latest .'
+		sh 'docker build -t oriexsol/my_app:build .'
+		sh "docker tag oriexsol/my_app:build oriexsol/my_app:${BUILD_NUMBER}"
+		sh 'docker push oriexsol/my_app:build'
+		sh "docker push oriexsol/my_app:${BUILD_NUMBER}"
 	}
 	stage("Test") {
 		sh 'echo "-----------------------------------------Test------------------------------------------"'
-		try{
-			sh 'docker rm -f dev_my_app'
-		}
-		catch(all){
-			sh 'echo "No such container: dev_my_app"'
-		}
-		sh 'docker run --name dev_my_app -p 443:80 -dit oriexsol/my_app:latest'
+		sh 'docker pull oriexsol/my_app:build'
+		sh 'docker tag oriexsol/my_app:build oriexsol/my_app:test'
+		sh 'docker push oriexsol/my_app:test'
+		sh 'docker rm -f dev_my_app'
+		sh 'docker run --name dev_my_app -p 443:80 -dit oriexsol/my_appt:test'
 		sh 'chmod +x isalive.sh'
 		def isalive = sh (script: "./isalive.sh", returnStdout: true)
 		sh 'docker rm -f dev_my_app'
@@ -32,13 +28,10 @@ node {
 	}
 	stage ("Deploy") {
 		sh 'echo "-----------------------------------------Deploy------------------------------------------"'
-		try{
-			sh 'docker rm -f my_app_prod'
-		}
-		catch(all){
-			sh 'echo "No such container: my_app_prod"'
-		}
-		sh 'docker build -t oriexsol/my_app_prod:latest .'
-		sh 'docker run --name my_app_prod -p 80:80 -dit oriexsol/my_app_prod:latest'
+		sh 'docker pull oriexsol/my_app:test'
+		sh 'docker tag oriexsol/my_app:test oriexsol/my_app:deploy'
+		sh 'docker push oriexsol/my_app:deploy'
+		sh 'docker rm -f my_app_prod'
+		sh 'docker run --name my_app_prod -p 80:80 -dit oriexsol/my_app:deploy'
 	}
 }

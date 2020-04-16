@@ -4,6 +4,10 @@ node {
 		checkout scm
 		try{
 			sh 'docker rm -f dev_my_app'
+		}catch(all){
+			sh 'echo "container: oriexsol/my_app:latest are not running"'
+		}
+		try{
 			sh 'docker rmi oriexsol/my_app:latest'
 		}catch(all){
 			sh 'echo "image: oriexsol/my_app:latest out"'

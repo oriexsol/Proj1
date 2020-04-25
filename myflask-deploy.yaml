@@ -15,6 +15,7 @@ spec:
       containers:
       - name: flaskapp
         image: oriexsol/my_app:deploy
+        imagePullPolicy: Always
         ports:
         - name: nodejs-port
           containerPort: 80

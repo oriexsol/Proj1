@@ -1,3 +1,2 @@
 # myrepo
-tahavod cvar
-Oved
+tahavod

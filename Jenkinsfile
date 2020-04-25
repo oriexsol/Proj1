@@ -42,7 +42,6 @@ node {
 		sh 'docker pull oriexsol/my_app:test'
 		sh 'docker tag oriexsol/my_app:test oriexsol/my_app:deploy'
 		sh 'docker push oriexsol/my_app:deploy'
-		sh 'docker rm -f my_app_prod || true'
-		sh 'docker run --name my_app_prod -p 80:80 -dit oriexsol/my_app:deploy'
+		sh 'kubectl rollout restart deploy flaskapp-prod --namespace=prod'
 	}
 }

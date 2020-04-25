@@ -1,6 +1,6 @@
 #! /bin/bash
-erez=$(curl -s 'http://localhost:443/isalive')
-if [ "$erez" = "true" ]
+isalive=$(curl -s 'http://172.31.45.191:32000/isalive')
+if [ "$isalive" = "true" ]
 then
 	echo "true"
 else

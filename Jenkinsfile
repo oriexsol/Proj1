@@ -18,11 +18,10 @@ node {
 		sh 'docker pull oriexsol/my_app:build'
 		sh 'docker tag oriexsol/my_app:build oriexsol/my_app:test'
 		sh 'docker push oriexsol/my_app:test'
-		sh 'docker rm -f dev_my_app || true'
-		sh 'docker run --name dev_my_app -p 443:80 -dit oriexsol/my_app:test'
+		sh 'kubectl scale deploy flaskapp-dev --namespace=dev --replicas=1'
+		sleep 10
 		sh 'chmod +x isalive.sh'
 		def isalive = sh (script: "./isalive.sh", returnStdout: true)
-		sh 'docker rm -f dev_my_app'
 		if ("${isalive}") {
 			echo "Testing completed successfully!"
 			echo "$isalive"
@@ -31,6 +30,7 @@ node {
 			echo "Failed The Testing"
 			currentBuild.result = 'FAILURE'
 		}
+		sh 'kubectl scale deploy flaskapp-dev --namespace=dev --replicas=0'
 	}
 	stage ("Deploy") {
 		sh 'echo "-----------------------------------------Deploy------------------------------------------"'

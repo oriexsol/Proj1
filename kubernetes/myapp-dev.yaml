@@ -4,7 +4,7 @@ metadata:
   name: flaskapp-dev
   namespace: dev
 spec:
-  replicas: 3
+  replicas: 0
   selector:
     matchLabels:
       app: flaskapp-dev
@@ -31,11 +31,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: flaskapp-service
+  name: flaskapp-d-service
+  namespace: dev
 spec:
   ports:
   - port: 80
     targetPort: 80
+    nodePort: 31000
     protocol: TCP
   selector:
     app: flaskapp-dev

@@ -20,8 +20,10 @@ node {
 		sh 'docker push oriexsol/my_app:test'
 		sh 'kubectl scale deploy flaskapp-dev --namespace=dev --replicas=1'
 		sleep 10
+		def NODE_IP = sh(script: "kubectl get nodes -o jsonpath='{ \$.items[*].status.addresses[?(@.type==\"InternalIP\")].address }'", returnStdout: true)
+		def NODE_PORT = sh(script: "kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services flaskapp-p-service --namespace=dev", returnStdout: true)
 		sh 'chmod +x isalive.sh'
-		def isalive = sh (script: "./isalive.sh", returnStdout: true)
+		def isalive = sh (script: "./isalive.sh ${NODE_IP} ${NODE_PORT}", returnStdout: true)
 		if ("${isalive}") {
 			echo "Testing completed successfully!"
 			echo "$isalive"

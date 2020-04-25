@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaskapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flaskapp
+  template:
+    metadata:
+      labels:
+        app: flaskapp
+    spec:
+      containers:
+      - name: flaskapp
+        image: oriexsol/my_app:deploy
+        imagePullPolicy: Always
+        ports:
+        - name: nodejs-port
+          containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /isalive
+            port: nodejs-port
+          initialDelaySeconds: 15
+          timeoutSeconds: 30
+---
+  
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaskapp-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: flaskapp
+  type: NodePort
+

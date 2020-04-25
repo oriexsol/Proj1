@@ -1,19 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flaskapp
+  name: flaskapp-prod
+  namespace: prod
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: flaskapp
+      app: flaskapp-prod
   template:
     metadata:
       labels:
-        app: flaskapp
+        app: flaskapp-prod
     spec:
       containers:
-      - name: flaskapp
+      - name: flaskapp-prod
         image: oriexsol/my_app:deploy
         imagePullPolicy: Always
         ports:
@@ -37,6 +38,6 @@ spec:
     targetPort: 80
     protocol: TCP
   selector:
-    app: flaskapp
+    app: flaskapp-prod
   type: NodePort
 

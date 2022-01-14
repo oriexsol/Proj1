@@ -7,14 +7,14 @@ pl = [
         "Job": "amazon"
     },
     {
-        "Name": "Avior Exsol",
+        "Name": "av Exsol",
         "Age": "25",
-        "Job": "mafat"
+        "Job": ""
     },
     {
-        "Name": "Dalit Exsol",
+        "Name": "da Exsol",
         "Age": "52",
-        "Job": "CEO digital-cut/lrps"
+        "Job": ""
     }
 ]
 
